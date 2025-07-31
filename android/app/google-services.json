@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "308514911111",
+    "project_id": "movie-rent",
+    "storage_bucket": "movie-rent.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308514911111:android:fb4ea548110912fc671922",
+        "android_client_info": {
+          "package_name": "com.example.movie_rent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABHv4daw_DfKVq9HZpRtruHiFxwfvpDoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
