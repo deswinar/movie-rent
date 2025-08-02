@@ -13,10 +13,14 @@ class MovieListController extends GetxController {
   }) : _movieApiService = movieApiService;
 
   final movieState = Rx<BaseState<List<MovieModel>>>(BaseStateInitial());
-  final _category = Rx<MovieCategory>(MovieCategory.popular);
 
+  final Rx<MovieCategory> _category = MovieCategory.popular.obs;
   set category(MovieCategory value) => _category.value = value;
   MovieCategory get category => _category.value;
+
+  final RxString _trendingTimeWindow = 'day'.obs;
+  set trendingTimeWindow(String value) => _trendingTimeWindow.value = value;
+  String get trendingTimeWindow => _trendingTimeWindow.value;
 
   int _currentPage = 1;
   int _totalPages = 1;
@@ -38,7 +42,11 @@ class MovieListController extends GetxController {
       final response = await _movieApiService.fetchMovies(
         category: _category.value,
         page: _currentPage,
+        trendingTimeWindow: _category.value == MovieCategory.trending
+            ? _trendingTimeWindow.value
+            : '',
       );
+
       _totalPages = response.totalPages;
       _movies.addAll(response.results);
       movieState.value = BaseStateSuccess(List<MovieModel>.from(_movies));
@@ -57,7 +65,11 @@ class MovieListController extends GetxController {
       final response = await _movieApiService.fetchMovies(
         category: _category.value,
         page: _currentPage,
+        trendingTimeWindow: _category.value == MovieCategory.trending
+            ? _trendingTimeWindow.value
+            : '',
       );
+
       _totalPages = response.totalPages;
       _movies.addAll(response.results);
       movieState.value = BaseStateSuccess(List<MovieModel>.from(_movies));

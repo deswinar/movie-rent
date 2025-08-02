@@ -1,7 +1,11 @@
 import 'package:movie_rent/core/constants/app_constants.dart';
 import 'package:movie_rent/core/enums/movie_category.dart';
 import 'package:movie_rent/core/services/base_api_service.dart';
+import 'package:movie_rent/data/models/genre_model.dart';
+import 'package:movie_rent/data/models/movie_explore_filter.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
+import 'package:movie_rent/data/responses/credits_response.dart';
+import 'package:movie_rent/data/responses/genre_list_response.dart';
 import 'package:movie_rent/data/responses/movie_response.dart';
 
 class MovieApiService extends BaseApiService {
@@ -31,9 +35,21 @@ class MovieApiService extends BaseApiService {
     );
   }
 
-  Future<MovieModel> fetchMovieDetail(int id) async {
+  Future<MovieModel> fetchMovieDetail({
+    required int id,
+    String language = 'en-US',
+    List<String>? appendToResponse,
+  }) async {
+    final queryParams = {
+      'language': language,
+      if (appendToResponse != null && appendToResponse.isNotEmpty)
+        'append_to_response': appendToResponse.join(','),
+    };
+
+    final uri = Uri(path: '/movie/$id', queryParameters: queryParams);
+
     return safeRequest<MovieModel>(
-      get('/movie/$id'),
+      get(uri.toString()),
       onSuccess: (data) => MovieModel.fromJson(data),
       fallbackErrorMessage: 'Failed to fetch movie detail',
     );
@@ -52,6 +68,42 @@ class MovieApiService extends BaseApiService {
       get(uri),
       onSuccess: (data) => MovieResponse.fromJson(data),
       fallbackErrorMessage: 'Failed to search movies',
+    );
+  }
+
+  Future<MovieResponse> discoverMovies(MovieExploreFilter filter) async {
+    final queryParams = filter.toQueryParameters();
+    final uri = Uri(path: '/discover/movie', queryParameters: queryParams);
+
+    return safeRequest<MovieResponse>(
+      get(uri.toString()),
+      onSuccess: (data) => MovieResponse.fromJson(data),
+      fallbackErrorMessage: 'Failed to discover movies',
+    );
+  }
+
+  // Genres
+  Future<List<GenreModel>> getGenres({String language = 'en-US'}) async {
+    final uri = '/genre/movie/list?language=$language';
+
+    return safeRequest<List<GenreModel>>(
+      get(uri),
+      onSuccess: (data) => GenreListResponse.fromJson(data).genres,
+      fallbackErrorMessage: 'Failed to fetch genres',
+    );
+  }
+
+  // Credits
+  Future<CreditsResponse> fetchMovieCredits({
+    required int movieId,
+    String language = 'en-US',
+  }) async {
+    final uri = '/movie/$movieId/credits?language=$language';
+
+    return safeRequest<CreditsResponse>(
+      get(uri),
+      onSuccess: (data) => CreditsResponse.fromJson(data),
+      fallbackErrorMessage: 'Failed to fetch movie credits',
     );
   }
 }

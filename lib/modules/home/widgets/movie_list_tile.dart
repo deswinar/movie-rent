@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
+import 'package:movie_rent/routes/app_routes.dart';
 
 class MovieListTile extends StatelessWidget {
   final MovieModel movie;
@@ -7,10 +9,14 @@ class MovieListTile extends StatelessWidget {
 
   const MovieListTile({super.key, required this.movie, this.onTap});
 
+  void _defaultNavigation() {
+    Get.toNamed(AppRoutes.movieDetail, arguments: movie.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: onTap,
+      onTap: onTap ?? _defaultNavigation,
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(6),
         child: Image.network(

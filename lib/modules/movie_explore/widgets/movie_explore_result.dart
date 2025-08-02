@@ -3,17 +3,17 @@ import 'package:get/get.dart';
 import 'package:movie_rent/core/states/base_state.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
 import 'package:movie_rent/modules/movie_list/widgets/movie_item_card.dart';
-import 'package:movie_rent/modules/movie_search/controllers/movie_search_controller.dart';
+import 'package:movie_rent/modules/movie_explore/controllers/movie_explore_controller.dart';
 
-class MovieSearchResult extends StatelessWidget {
-  final MovieSearchController controller;
+class MovieExploreResult extends StatelessWidget {
+  final MovieExploreController controller;
 
-  const MovieSearchResult({super.key, required this.controller});
+  const MovieExploreResult({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final state = controller.searchState.value;
+      final state = controller.exploreState.value;
 
       if (state is BaseStateLoading) {
         return const Center(child: CircularProgressIndicator());

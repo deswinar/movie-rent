@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_rent/modules/auth/views/profile_screen.dart';
 import 'package:movie_rent/modules/home/views/home_screen.dart';
 import 'package:movie_rent/modules/main_navigation/controllers/main_navigation_controller.dart';
+import 'package:movie_rent/modules/movie_explore/views/movie_explore_screen.dart';
 
 class MainNavigationScreen extends StatelessWidget {
   const MainNavigationScreen({super.key});
@@ -10,10 +12,11 @@ class MainNavigationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(MainNavigationController());
 
-    final List<Widget> screens = const [
-      HomeScreen(),
-      Placeholder(), // TODO: Replace with FavoritesScreen()
-      Placeholder(), // TODO: Replace with ProfileScreen()
+    final List<Widget> screens = [
+      const HomeScreen(),
+      const Placeholder(), // TODO: Replace with FavoritesScreen()
+      const MovieExploreScreen(),
+      ProfileScreen(),
     ];
 
     return Obx(() {
@@ -28,6 +31,7 @@ class MainNavigationScreen extends StatelessWidget {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Explore'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ),

@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:movie_rent/modules/home/controllers/home_controller.dart';
+import 'package:movie_rent/modules/genre/bindings/genre_binding.dart';
 import 'package:movie_rent/modules/movie_explore/controllers/movie_explore_controller.dart';
 
-class HomeBinding extends Bindings {
+class MovieExploreBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => HomeController(movieApiService: Get.find()));
     Get.lazyPut(() => MovieExploreController(Get.find()));
+    GenreBinding().dependencies();
   }
 }

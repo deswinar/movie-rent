@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:movie_rent/modules/home/bindings/home_binding.dart';
 import 'package:movie_rent/modules/main_navigation/controllers/main_navigation_controller.dart';
+import 'package:movie_rent/modules/movie_explore/bindings/movie_explore_binding.dart';
 
 class MainNavigationBinding extends Bindings {
   @override
@@ -8,5 +9,6 @@ class MainNavigationBinding extends Bindings {
     Get.lazyPut(() => MainNavigationController());
 
     HomeBinding().dependencies();
+    MovieExploreBinding().dependencies();
   }
 }

@@ -1,9 +1,9 @@
 enum MovieCategory {
-  nowPlaying,
   popular,
+  trending,
+  nowPlaying,
   topRated,
   upcoming,
-  trending,
 }
 
 extension MovieCategoryPath on MovieCategory {

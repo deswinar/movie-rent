@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class AppUser {
+class AppUser extends Equatable {
   final String uid;
   final String email;
   final String? name;
@@ -8,7 +9,7 @@ class AppUser {
   final String? role;
   final DateTime? createdAt;
 
-  AppUser({
+  const AppUser({
     required this.uid,
     required this.email,
     this.name,
@@ -38,4 +39,7 @@ class AppUser {
       'createdAt': createdAt ?? DateTime.now(),
     };
   }
+
+  @override
+  List<Object?> get props => [uid, email, name, avatarUrl, role, createdAt];
 }

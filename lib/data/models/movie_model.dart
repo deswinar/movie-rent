@@ -1,4 +1,6 @@
-class MovieModel {
+import 'package:equatable/equatable.dart';
+
+class MovieModel extends Equatable {
   final int id;
   final String title;
   final String originalTitle;
@@ -14,7 +16,7 @@ class MovieModel {
   final int voteCount;
   final List<int> genreIds;
 
-  MovieModel({
+  const MovieModel({
     required this.id,
     required this.title,
     required this.originalTitle,
@@ -71,4 +73,22 @@ class MovieModel {
       'genre_ids': genreIds,
     };
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        originalTitle,
+        overview,
+        posterPath,
+        backdropPath,
+        releaseDate,
+        adult,
+        video,
+        originalLanguage,
+        popularity,
+        voteAverage,
+        voteCount,
+        genreIds,
+      ];
 }

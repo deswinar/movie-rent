@@ -7,7 +7,6 @@ class MovieListBinding extends Bindings {
 
   @override
   void dependencies() {
-    Get.lazyPut(()=>MovieApiService());
     Get.lazyPut(() => MovieListController(
           movieApiService: Get.find<MovieApiService>(),
         ));

@@ -1,8 +1,10 @@
-class MovieDateRange {
+import 'package:equatable/equatable.dart';
+
+class MovieDateRange extends Equatable {
   final String minimum;
   final String maximum;
 
-  MovieDateRange({
+  const MovieDateRange({
     required this.minimum,
     required this.maximum,
   });
@@ -20,4 +22,7 @@ class MovieDateRange {
       'maximum': maximum,
     };
   }
+
+  @override
+  List<Object> get props => [minimum, maximum];
 }

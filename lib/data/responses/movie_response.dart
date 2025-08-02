@@ -1,14 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:movie_rent/data/models/movie_date_range.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
 
-class MovieResponse {
+class MovieResponse extends Equatable {
   final MovieDateRange? dates;
   final int page;
   final int totalPages;
   final int totalResults;
   final List<MovieModel> results;
 
-  MovieResponse({
+  const MovieResponse({
     this.dates,
     required this.page,
     required this.totalPages,
@@ -29,4 +30,13 @@ class MovieResponse {
           .toList(),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        dates,
+        page,
+        totalPages,
+        totalResults,
+        results,
+      ];
 }
