@@ -31,15 +31,35 @@ abstract class BaseApiService extends GetConnect {
     try {
       final response = await request;
 
+      // Log request metadata
+    log(
+      '''[API Request]
+URL     : ${response.request?.url}
+Method  : ${response.request?.method}
+Headers : ${response.request?.headers}''',
+      name: 'API',
+    );
+
+      log(
+        '''[API Response]
+Status Code : ${response.statusCode}''',
+        name: 'API',
+      );
+
       if (response.isOk && response.body != null) {
-        return onSuccess != null
-            ? onSuccess(response.body)
-            : response.body as T;
+        return onSuccess != null ? onSuccess(response.body) : response.body as T;
       } else {
         throw ApiException.fromResponse(response);
       }
     } catch (e, stack) {
-      log('API Error: $e', stackTrace: stack);
+      log(
+        '''[API Error]
+Error Type : ${e.runtimeType}
+Message    : ${e.toString()}''',
+        name: 'API',
+        stackTrace: stack,
+      );
+
       if (e is ApiException) {
         rethrow;
       } else {
