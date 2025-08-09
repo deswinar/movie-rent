@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/helpers/image_helper.dart';
@@ -35,13 +36,19 @@ class MovieItemCard extends StatelessWidget {
           leading: movie.posterPath != null
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(6),
-                  child: Image.network(
-                    imageUrl ?? '',
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl ?? '',
                     width: 60,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
-                      color: Colors.grey[300],
+                    placeholder: (context, url) => Container(
                       width: 60,
+                      color: Colors.grey[300],
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      width: 60,
+                      color: Colors.grey[300],
                       alignment: Alignment.center,
                       child: const Icon(Icons.broken_image),
                     ),

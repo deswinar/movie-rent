@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/helpers/image_helper.dart';
@@ -39,18 +40,22 @@ class MovieCard extends StatelessWidget {
                   // Poster Image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      imageUrl ?? '',
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl ?? '',
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      errorBuilder: (_, __, ___) => Container(
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[300],
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Container(
                         color: Colors.grey[300],
                         alignment: Alignment.center,
                         child: const Icon(Icons.broken_image),
                       ),
                     ),
                   ),
-
                   // Adult badge
                   if (movie.adult)
                     Positioned(

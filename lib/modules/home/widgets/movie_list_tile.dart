@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_rent/core/helpers/image_helper.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
 import 'package:movie_rent/routes/app_routes.dart';
 
@@ -15,15 +17,25 @@ class MovieListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = ImageHelper.getUrl(
+      movie.posterPath,
+      size: 'w92',
+    );
     return ListTile(
       onTap: onTap ?? _defaultNavigation,
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(6),
-        child: Image.network(
-          movie.posterPath != null ? 'https://image.tmdb.org/t/p/w92${movie.posterPath}' : '',
+        child: CachedNetworkImage(
+          imageUrl: imageUrl ?? '',
           width: 50,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Container(
+          placeholder: (context, url) => Container(
+            width: 50,
+            color: Colors.grey[300],
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator(strokeWidth: 2),
+          ),
+          errorWidget: (context, url, error) => Container(
             width: 50,
             color: Colors.grey[300],
             alignment: Alignment.center,

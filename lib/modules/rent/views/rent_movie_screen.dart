@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,11 +41,23 @@ class _RentMovieScreenState extends State<RentMovieScreen> {
             // Movie Preview
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                imageUrl ?? '',
+              child: CachedNetworkImage(
+                imageUrl: imageUrl ?? '',
                 height: 180,
                 width: double.infinity,
                 fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  height: 180,
+                  width: double.infinity,
+                  color: Colors.grey[300],
+                  child: const Center(child: CircularProgressIndicator()),
+                ),
+                errorWidget: (context, url, error) => Container(
+                  height: 180,
+                  width: double.infinity,
+                  color: Colors.grey[300],
+                  child: const Center(child: Icon(Icons.broken_image)),
+                ),
               ),
             ),
             const SizedBox(height: 12),
