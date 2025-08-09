@@ -80,6 +80,8 @@ The project follows a modular architecture with clear separation of concerns to 
 
     - Create a `.env` file in the project root by copying `.env.example`.
     - Set your TMDB Bearer Token in `.env` as follows:
+      `TMDB_BEARER_TOKEN=your_tmdb_bearer_token`
+    - To get the token, register at [The Movie Database (TMDb)](https://www.themoviedb.org/) and follow their instructions to generate an API Bearer Token.
 
 4. **Configure Firebase:**
 
