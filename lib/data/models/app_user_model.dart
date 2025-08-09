@@ -18,6 +18,24 @@ class AppUser extends Equatable {
     this.createdAt,
   });
 
+  AppUser copyWith({
+    String? uid,
+    String? email,
+    String? name,
+    String? avatarUrl,
+    String? role,
+    DateTime? createdAt,
+  }) {
+    return AppUser(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      role: role ?? this.role,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
   factory AppUser.fromJson(Map<String, dynamic> json) {
     return AppUser(
       uid: json['uid'],
