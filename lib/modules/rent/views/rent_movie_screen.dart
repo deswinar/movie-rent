@@ -9,6 +9,8 @@ import 'package:movie_rent/data/models/movie_model.dart';
 import 'package:movie_rent/data/models/movie_rent.dart';
 import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 import 'package:movie_rent/modules/rent/controllers/rent_controller.dart';
+import 'package:movie_rent/modules/rent/data/payment_methods.dart';
+import 'package:movie_rent/modules/rent/widgets/payment_method_tile.dart';
 import 'package:movie_rent/routes/app_routes.dart';
 
 class RentMovieScreen extends StatefulWidget {
@@ -116,26 +118,56 @@ class _RentMovieScreenState extends State<RentMovieScreen> {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () async {
-                    final now = DateTime.now();
-                    final rent = MovieRent(
-                      movieId: movie.id,
-                      title: movie.title,
-                      posterUrl: movie.posterPath ?? '',
-                      rentDate: Timestamp.fromDate(now),
-                      expireAt: Timestamp.fromDate(now.add(Duration(days: _rentalDays))),
-                      duration: _rentalDays,
-                      pricePerDay: _pricePerDay,
-                      totalPrice: totalPrice,
+                    final confirmed = await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Konfirmasi Pembayaran'),
+                          content: SizedBox(
+                            width: double.maxFinite,
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: paymentMethods
+                                  .map((pm) => PaymentMethodTile(name: pm['name']!, details: pm['details']!))
+                                  .toList(),
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Cancel'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text('Confirm'),
+                            ),
+                          ],
+                        );
+                      },
                     );
 
-                    await _rentController.createRent(userId, rent);
+                    if (confirmed == true) {
+                      final now = DateTime.now();
+                      final rent = MovieRent(
+                        movieId: movie.id,
+                        title: movie.title,
+                        posterUrl: movie.posterPath ?? '',
+                        rentDate: Timestamp.fromDate(now),
+                        expireAt: Timestamp.fromDate(now.add(Duration(days: _rentalDays))),
+                        duration: _rentalDays,
+                        pricePerDay: _pricePerDay,
+                        totalPrice: totalPrice,
+                      );
 
-                    final updatedState = _rentController.createRentState.value;
-                    if (updatedState is BaseStateSuccess) {
-                      Get.offAllNamed(AppRoutes.main);
-                      Get.snackbar("Berhasil", "Film berhasil disewa.");
-                    } else if (updatedState is BaseStateError) {
-                      Get.snackbar("Error", updatedState.message);
+                      await _rentController.createRent(userId, rent);
+
+                      final updatedState = _rentController.createRentState.value;
+                      if (updatedState is BaseStateSuccess) {
+                        Get.offAllNamed(AppRoutes.main);
+                        Get.snackbar("Berhasil", "Film berhasil disewa.");
+                      } else if (updatedState is BaseStateError) {
+                        Get.snackbar("Error", updatedState.message);
+                      }
                     }
                   },
                   icon: const Icon(Icons.shopping_cart_checkout),
