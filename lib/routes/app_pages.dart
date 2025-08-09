@@ -7,12 +7,14 @@ import 'package:movie_rent/modules/main_navigation/bindings/main_navigation_bind
 import 'package:movie_rent/modules/main_navigation/views/main_navigation_screen.dart';
 import 'package:movie_rent/modules/movie_detail/bindings/movie_detail_binding.dart';
 import 'package:movie_rent/modules/movie_detail/views/movie_detail_screen.dart';
-import 'package:movie_rent/modules/movie_discover/bindings/movie_discover_binding.dart';
-import 'package:movie_rent/modules/movie_discover/views/movie_discover_screen.dart';
 import 'package:movie_rent/modules/movie_list/bindings/movie_list_binding.dart';
 import 'package:movie_rent/modules/movie_list/views/movie_list_screen.dart';
 import 'package:movie_rent/modules/movie_explore/bindings/movie_explore_binding.dart';
 import 'package:movie_rent/modules/movie_explore/views/movie_explore_screen.dart';
+import 'package:movie_rent/modules/rent/bindings/rent_binding.dart';
+import 'package:movie_rent/modules/rent/bindings/rented_movie_detail_binding.dart';
+import 'package:movie_rent/modules/rent/views/rent_movie_screen.dart';
+import 'package:movie_rent/modules/rent/views/rented_movie_detail_screen.dart';
 import 'package:movie_rent/routes/app_routes.dart';
 
 class AppPages {
@@ -47,15 +49,26 @@ class AppPages {
       page: () => const MovieExploreScreen(),
       binding: MovieExploreBinding(),
     ),
-    GetPage(
-      name: AppRoutes.movieDiscover,
-      page: () => const MovieDiscoverScreen(),
-      binding: MovieDiscoverBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.movieDiscover,
+    //   page: () => const MovieDiscoverScreen(),
+    //   binding: MovieDiscoverBinding(),
+    // ),
     GetPage(
       name: AppRoutes.movieDetail,
       page: () => const MovieDetailScreen(),
       binding: MovieDetailBinding(),
-    )
+    ),
+    GetPage(
+      name: AppRoutes.rentMovie,
+      page: () => const RentMovieScreen(),
+      binding: RentBinding(),
+    ),
+    // Rent Movie Detail
+    GetPage(
+      name: AppRoutes.rentMovieDetail,
+      page: () => const RentedMovieDetailScreen(),
+      binding: RentedMovieDetailBinding(),
+    ),
   ];
 }

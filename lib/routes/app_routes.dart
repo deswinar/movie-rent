@@ -7,4 +7,6 @@ class AppRoutes {
   static const movieExplore = '/movie-explore';
   static const movieDiscover = '/movie-discover';
   static const movieDetail = '/movie-detail';
+  static const rentMovie = '/rent-movie';
+  static const rentMovieDetail = '/rent-movie-detail';
 }
