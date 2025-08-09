@@ -69,20 +69,25 @@ The project follows a modular architecture with clear separation of concerns to 
 ## Getting Started
 
 1. **Clone the repository:**
-`git clone https://github.com/deswinar/movie-rent.git`
 
+    `git clone https://github.com/deswinar/movie-rent.git`
 
 2. **Install dependencies:**
-`flutter pub get`
 
+    `flutter pub get`
 
-3. **Configure Firebase:**
+3. **Add environment variables:**
+
+    - Create a `.env` file in the project root by copying `.env.example`.
+    - Set your TMDB Bearer Token in `.env` as follows:
+
+4. **Configure Firebase:**
 
     Follow the Firebase setup guide to add Firebase to your Flutter project and include the necessary configuration files.
 
-4. **Run the app:**
-`flutter run`
+5. **Run the app:**
 
+    `flutter run`
 
 ---
 
