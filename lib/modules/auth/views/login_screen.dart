@@ -46,26 +46,17 @@ class LoginScreen extends StatelessWidget {
               else
                 ElevatedButton(
                   onPressed: () {
-                    try {
-                      authController.login(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                      );
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      Get.offAllNamed(AppRoutes.main);
-                    } on Exception catch (e) {
-                      Get.snackbar(
-                        "Error",
-                        e.toString(),
-                        backgroundColor: Colors.red,
-                      );
-                    }
+                    authController.login(
+                      emailController.text.trim(),
+                      passwordController.text.trim(),
+                    );
+                    FocusManager.instance.primaryFocus?.unfocus();
                   },
                   child: const Text("Login"),
                 ),
               const SizedBox(height: 12),
               TextButton(
-                onPressed: () => Get.toNamed('/register'),
+                onPressed: () => Get.toNamed(AppRoutes.register),
                 child: const Text("Don't have an account? Register"),
               ),
               if (state is BaseStateError)

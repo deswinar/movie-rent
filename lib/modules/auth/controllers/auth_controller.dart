@@ -4,6 +4,7 @@ import 'package:movie_rent/core/states/base_state.dart';
 import 'package:movie_rent/data/models/app_user_model.dart';
 import 'package:movie_rent/data/repositories/auth_repository.dart';
 import 'package:movie_rent/data/repositories/user_repository.dart';
+import 'package:movie_rent/routes/app_routes.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _authRepository;
@@ -65,6 +66,7 @@ class AuthController extends GetxController {
       appUser.value = newUser;
 
       authState.value = BaseStateSuccess(null);
+      Get.offAllNamed(AppRoutes.main);
 
     } on FirebaseAuthException catch (e) {
       authState.value = BaseStateError(e.message ?? 'Registration failed');
@@ -86,6 +88,7 @@ class AuthController extends GetxController {
       appUser.value = userData;
 
       authState.value = BaseStateSuccess(null);
+      Get.offAllNamed(AppRoutes.main);
 
     } on FirebaseAuthException catch (e) {
       authState.value = BaseStateError(e.message ?? 'Login failed');

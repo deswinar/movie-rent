@@ -46,20 +46,25 @@ class RegisterScreen extends StatelessWidget {
               else
                 ElevatedButton(
                   onPressed: () {
-                    try {
-                      authController.register(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                      );
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      Get.offAllNamed(AppRoutes.main);
-                    } on Exception catch (e) {
+                    final password = passwordController.text.trim();
+
+                    final passwordValid = _validatePassword(password);
+                    if (!passwordValid) {
                       Get.snackbar(
-                        "Error",
-                        e.toString(),
-                        backgroundColor: Colors.red,
+                        "Invalid Password",
+                        "Password must be at least 8 characters, include a number, a letter, and one uppercase letter.",
+                        backgroundColor: Colors.red.shade400,
+                        colorText: Colors.white,
+                        snackPosition: SnackPosition.BOTTOM,
                       );
+                      return;
                     }
+
+                    authController.register(
+                      emailController.text.trim(),
+                      password,
+                    );
+                    FocusManager.instance.primaryFocus?.unfocus();
                   },
                   child: const Text("Register"),
                 ),
@@ -81,5 +86,14 @@ class RegisterScreen extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  bool _validatePassword(String password) {
+    final hasMinLength = password.length >= 8;
+    final hasUppercase = password.contains(RegExp(r'[A-Z]'));
+    final hasLetter = password.contains(RegExp(r'[a-zA-Z]'));
+    final hasNumber = password.contains(RegExp(r'\d'));
+
+    return hasMinLength && hasUppercase && hasLetter && hasNumber;
   }
 }

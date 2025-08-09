@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:movie_rent/data/repositories/user_repository.dart';
 import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 import 'package:movie_rent/data/repositories/auth_repository.dart';
+import 'package:movie_rent/modules/profile/controllers/user_controller.dart';
 
 class AuthBinding extends Bindings {
   @override
@@ -15,6 +16,7 @@ class AuthBinding extends Bindings {
       ),
       permanent: true,
     );
+    Get.put(UserController(Get.find()));
   }
 }
 

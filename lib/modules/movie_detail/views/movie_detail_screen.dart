@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/states/base_state.dart';
 import 'package:movie_rent/data/responses/credits_response.dart';
+import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 import 'package:movie_rent/modules/movie_detail/widgets/backdrop_image.dart';
 import 'package:movie_rent/modules/movie_detail/widgets/credits_section.dart';
 import 'package:movie_rent/modules/movie_detail/widgets/info_chips.dart';
 import 'package:movie_rent/modules/movie_detail/widgets/overview_section.dart';
 import 'package:movie_rent/modules/movie_detail/widgets/rating_section.dart';
 import 'package:movie_rent/modules/movie_detail/widgets/title_section.dart';
+import 'package:movie_rent/routes/app_routes.dart';
 
 import '../controllers/movie_detail_controller.dart';
 
@@ -18,9 +20,7 @@ class MovieDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final movieId = Get.arguments as int;
 
-    final controller = Get.put(
-      MovieDetailController(Get.find()),
-    );
+    final MovieDetailController controller = Get.find();
 
     controller.fetchMovieDetail(id: movieId);
     controller.fetchMovieCredits(id: movieId);
@@ -59,7 +59,7 @@ class MovieDetailScreen extends StatelessWidget {
                           return const Center(child: CircularProgressIndicator());
                         } else if (state is BaseStateError) {
                           return Text(
-                            (state as BaseStateError).message,
+                            state.message ?? 'Unknown error',
                             style: const TextStyle(color: Colors.red),
                           );
                         } else if (state is BaseStateSuccess<CreditsResponse>) {
@@ -79,6 +79,45 @@ class MovieDetailScreen extends StatelessWidget {
         }
         return const SizedBox();
       }),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Obx(() {
+          final authController = Get.find<AuthController>();
+          final isLoggedIn = authController.isLoggedIn;
+          final alreadyRented = controller.isAlreadyRented.value;
+
+          return SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton.icon(
+              onPressed: alreadyRented
+                  ? null // disable if already rented
+                  : () {
+                      if (isLoggedIn) {
+                        Get.toNamed(AppRoutes.rentMovie, arguments: controller.movie);
+                      } else {
+                        Get.snackbar("Login required", "Please login to rent a movie.");
+                        Get.toNamed(AppRoutes.login);
+                      }
+                    },
+              icon: Icon(
+                alreadyRented
+                    ? Icons.check_circle
+                    : isLoggedIn
+                        ? Icons.shopping_cart
+                        : Icons.login,
+              ),
+              label: Text(
+                alreadyRented
+                    ? "Already Rented"
+                    : isLoggedIn
+                        ? "Rent this movie"
+                        : "Login to rent",
+              ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }

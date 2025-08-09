@@ -4,13 +4,24 @@ import 'package:movie_rent/core/states/base_state.dart';
 import 'package:movie_rent/data/models/cast_model.dart';
 import 'package:movie_rent/data/models/crew_model.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
+import 'package:movie_rent/data/repositories/rent_repository.dart';
 import 'package:movie_rent/data/responses/credits_response.dart';
 import 'package:movie_rent/data/services/movie_api_service.dart';
+import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 
 class MovieDetailController extends GetxController {
   final MovieApiService _movieApiService;
+  final RentRepository _rentRepository;
 
-  MovieDetailController(this._movieApiService);
+  MovieDetailController({
+    required MovieApiService movieApiService,
+    required RentRepository rentRepository,
+  })  : _movieApiService = movieApiService,
+        _rentRepository = rentRepository;
+
+  final AuthController _authController = Get.find();
+
+  final isAlreadyRented = false.obs;
 
   final movieDetailState = Rx<BaseState<MovieModel>>(BaseStateInitial());
   final creditsState = Rx<BaseState<CreditsResponse>>(BaseStateInitial());
@@ -33,6 +44,20 @@ class MovieDetailController extends GetxController {
   String get errorMessage =>
       (movieDetailState.value as BaseStateError).message;
 
+  @override
+  void onInit() {
+    super.onInit();
+
+    // Watch auth state and check rentals when user changes
+    ever(_authController.firebaseUser, (user) {
+      if (user != null && movie != null) {
+        checkIfAlreadyRented(movieId: movie!.id);
+      } else {
+        isAlreadyRented.value = false;
+      }
+    });
+  }
+
   Future<void> fetchMovieDetail({
     required int id,
     String language = 'en-US',
@@ -47,6 +72,11 @@ class MovieDetailController extends GetxController {
         appendToResponse: appendToResponse,
       );
       movieDetailState.value = BaseStateSuccess(detail);
+
+      // If user already logged in, check immediately
+      if (_authController.firebaseUser.value != null) {
+        await checkIfAlreadyRented(movieId: id);
+      }
     } on ApiException catch (e) {
       movieDetailState.value = BaseStateError(e.message);
     }
@@ -64,5 +94,17 @@ class MovieDetailController extends GetxController {
     } on ApiException catch (e) {
       creditsState.value = BaseStateError(e.message);
     }
+  }
+
+  Future<void> checkIfAlreadyRented({required int movieId}) async {
+    if (!_authController.isLoggedIn) {
+      isAlreadyRented.value = false;
+      return;
+    }
+
+    final userId = _authController.firebaseUser.value?.uid;
+    final activeRents = await _rentRepository.getActiveRents(userId ?? '');
+
+    isAlreadyRented.value = activeRents.any((rent) => rent.movieId == movieId);
   }
 }
