@@ -6,6 +6,18 @@ The Movie Rent app is a Flutter-based application that allows users to browse, e
 
 ---
 
+## App Screenshots
+
+<img width="1290" height="2796" alt="01" src="https://github.com/user-attachments/assets/f20bbac3-a55a-4b71-a095-7977b4a965ac" />
+<img width="1290" height="2796" alt="02" src="https://github.com/user-attachments/assets/e8ff494e-5b63-49aa-9c1e-dce301d252d6" />
+<img width="1290" height="2796" alt="03" src="https://github.com/user-attachments/assets/97f464ef-c247-4b0c-9460-67ab0c1226fd" />
+<img width="1290" height="2796" alt="04" src="https://github.com/user-attachments/assets/b12168a4-2f02-4226-bf87-ac87487236c6" />
+<img width="1290" height="2796" alt="05" src="https://github.com/user-attachments/assets/42a5a7d6-7391-48ef-a94e-8ffe1e1b5874" />
+<img width="1290" height="2796" alt="06" src="https://github.com/user-attachments/assets/7ddbf639-af06-407b-8a96-d2fec55090c4" />
+<img width="1290" height="2796" alt="07" src="https://github.com/user-attachments/assets/364df88c-ad5d-4ff6-a921-a3a4e8ff6ff0" />
+
+---
+
 ## Project Structure
 
 The project follows a modular architecture with clear separation of concerns to improve maintainability and scalability:
