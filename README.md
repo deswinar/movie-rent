@@ -18,6 +18,15 @@ The Movie Rent app is a Flutter-based application that allows users to browse, e
 
 ---
 
+## Download Movie Rent APK
+
+You can download the latest APK from the [Releases page](https://github.com/deswinar/movie-rent/releases).
+
+Direct link to the latest release APK:  
+[Movie Rent APK v1.0.0](https://github.com/deswinar/movie-rent/releases/download/v1.0.0/app-release.apk).
+
+---
+
 ## Project Structure
 
 The project follows a modular architecture with clear separation of concerns to improve maintainability and scalability:
