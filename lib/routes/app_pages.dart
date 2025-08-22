@@ -15,10 +15,15 @@ import 'package:movie_rent/modules/rent/bindings/rent_binding.dart';
 import 'package:movie_rent/modules/rent/bindings/rented_movie_detail_binding.dart';
 import 'package:movie_rent/modules/rent/views/rent_movie_screen.dart';
 import 'package:movie_rent/modules/rent/views/rented_movie_detail_screen.dart';
+import 'package:movie_rent/modules/splash/views/splash_screen.dart';
 import 'package:movie_rent/routes/app_routes.dart';
 
 class AppPages {
   static final routes = [
+    GetPage(
+      name: AppRoutes.splash,
+      page: () => const SplashScreen(),
+    ),
     GetPage(
       name: AppRoutes.login,
       page: () => LoginScreen(),
