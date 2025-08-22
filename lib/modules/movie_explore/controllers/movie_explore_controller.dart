@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:movie_rent/core/enums/sort_option.dart';
 import 'package:movie_rent/core/services/api_exceptions.dart';
 import 'package:movie_rent/core/states/base_state.dart';
@@ -104,7 +105,7 @@ class MovieExploreController extends GetxController {
       exploreState.value = BaseStateError(e.message);
     }
   }
-
+  
   void _generateActiveTags() {
     final tags = <String>[];
 
@@ -114,7 +115,9 @@ class MovieExploreController extends GetxController {
 
     final f = filter.value;
     if (f.year != null) tags.add('Year: ${f.year}');
-    if (f.sortBy != null) tags.add('Sort: ${SortOptionExtension.fromApiValue(f.sortBy ?? 'popularity.desc').label}');
+    if (f.sortBy != null) {
+      tags.add('Sort: ${SortOptionExtension.fromApiValue(f.sortBy ?? 'popularity.desc').label}');
+    }
     if ((f.genreIds?.isNotEmpty ?? false)) {
       final genreNames = f.genreIds!
           .map((id) => _genreController.genreMap[id])
@@ -129,9 +132,24 @@ class MovieExploreController extends GetxController {
       final lte = f.voteAverageLte?.toStringAsFixed(1) ?? '10';
       tags.add('Rating: $gte–$lte');
     }
-    if (f.releaseDateGte != null || f.releaseDateLte != null) {
-      tags.add('Release: ${f.releaseDateGte ?? 'Any'} to ${f.releaseDateLte ?? 'Any'}');
+
+    // Format release dates
+    String formatDate(String? dateStr) {
+      if (dateStr == null) return 'Any';
+      try {
+        final date = DateTime.parse(dateStr);
+        return DateFormat('MMM dd, yyyy').format(date); // e.g., Jan 01, 2020
+      } catch (_) {
+        return dateStr;
+      }
     }
+
+    final releaseFrom = formatDate(f.releaseDateGte);
+    final releaseTo = formatDate(f.releaseDateLte);
+    if (f.releaseDateGte != null || f.releaseDateLte != null) {
+      tags.add('Release: $releaseFrom to $releaseTo');
+    }
+
     if (f.includeAdult) tags.add('Adult: Yes');
 
     activeTags.value = tags;

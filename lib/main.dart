@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       themeMode: ThemeMode.system,
       initialBinding: InitialBinding(),
-      initialRoute: AppRoutes.main,
+      initialRoute: AppRoutes.splash,
       getPages: AppPages.routes,
       defaultTransition: Transition.topLevel,
       transitionDuration: const Duration(milliseconds: 500),
