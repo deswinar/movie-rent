@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/states/base_state.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/data/responses/credits_response.dart';
 import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 import 'package:movie_rent/modules/movie_detail/widgets/backdrop_image.dart';
@@ -29,7 +30,7 @@ class MovieDetailScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Movie Detail')),
       body: Obx(() {
         if (controller.isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const AppLoader();
         } else if (controller.hasError) {
           return Center(child: Text(controller.errorMessage));
         } else if (controller.movie != null) {
@@ -56,7 +57,7 @@ class MovieDetailScreen extends StatelessWidget {
                       Obx(() {
                         final state = controller.creditsState.value;
                         if (state is BaseStateLoading) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const AppLoader();
                         } else if (state is BaseStateError) {
                           return Text(
                             state.message ?? 'Unknown error',

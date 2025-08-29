@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/enums/movie_category.dart';
 import 'package:movie_rent/core/states/base_state.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/modules/home/controllers/home_controller.dart';
 import 'package:movie_rent/modules/home/widgets/movie_card.dart';
 import 'package:movie_rent/routes/app_routes.dart';
@@ -75,7 +76,7 @@ class MovieCategorySection extends StatelessWidget {
             constraints: const BoxConstraints(maxHeight: 240),
             child: switch (state) {
               BaseStateLoading _ =>
-                const Center(child: CircularProgressIndicator()),
+                const AppLoader(),
               BaseStateError _ =>
                 Center(child: Text(controller.errorMessage(category))),
               BaseStateSuccess<List> success => ListView.separated(

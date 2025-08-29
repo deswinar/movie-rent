@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/states/base_state.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/modules/genre/controllers/genre_controller.dart';
 import 'package:movie_rent/data/models/genre_model.dart';
 
@@ -22,7 +23,7 @@ class GenreFilterWidget extends StatelessWidget {
       final state = genreController.genresState.value;
 
       if (state is BaseStateLoading) {
-        return const Center(child: CircularProgressIndicator());
+        return const AppLoader();
       }
 
       if (state is BaseStateError) {
