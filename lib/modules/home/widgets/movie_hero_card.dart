@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/helpers/image_helper.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
 import 'package:movie_rent/routes/app_routes.dart';
 
@@ -33,7 +34,7 @@ class MovieHeroCard extends StatelessWidget {
               CachedNetworkImage(
                 imageUrl: imageUrl,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) => const AppLoader(),
                 errorWidget: (context, url, error) => const Center(child: Icon(Icons.broken_image)),
               )
             else

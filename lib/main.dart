@@ -4,11 +4,15 @@ import 'package:get/get.dart';
 import 'package:movie_rent/core/bindings/initial_binding.dart';
 import 'package:movie_rent/core/services/firebase_service.dart';
 import 'package:movie_rent/core/theme/app_theme.dart';
+import 'package:movie_rent/core/transitions/fade_scale_transition.dart';
 import 'package:movie_rent/routes/app_pages.dart';
 import 'package:movie_rent/routes/app_routes.dart';
+import 'package:rive/rive.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await RiveNative.init();
 
   await dotenv.load(fileName: ".env");
   await Get.putAsync(() => FirebaseService().init());
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
       initialBinding: InitialBinding(),
       initialRoute: AppRoutes.splash,
       getPages: AppPages.routes,
-      defaultTransition: Transition.topLevel,
+      customTransition: FadeScaleTransition(),
       transitionDuration: const Duration(milliseconds: 500),
     );
   }

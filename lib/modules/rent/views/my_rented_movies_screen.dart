@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/widgets/app_empty.dart';
 import 'package:movie_rent/core/widgets/app_error.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 import 'package:movie_rent/modules/rent/controllers/my_rented_movie_controller.dart';
 import 'package:movie_rent/modules/rent/widgets/my_rent_filter_sheet.dart';
@@ -56,7 +57,7 @@ class MyRentedMoviesScreen extends StatelessWidget {
             },
             child: Obx(() {
               if (controller.isLoading && controller.rentedMovies.isEmpty) {
-                return const Center(child: CircularProgressIndicator());
+                return const AppLoader();
               }
 
               if (controller.hasError && controller.rentedMovies.isEmpty) {

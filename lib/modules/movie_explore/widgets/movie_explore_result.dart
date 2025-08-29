@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/states/base_state.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
 import 'package:movie_rent/modules/movie_list/widgets/movie_item_card.dart';
 import 'package:movie_rent/modules/movie_explore/controllers/movie_explore_controller.dart';
@@ -16,7 +17,7 @@ class MovieExploreResult extends StatelessWidget {
       final state = controller.exploreState.value;
 
       if (state is BaseStateLoading) {
-        return const Center(child: CircularProgressIndicator());
+        return const AppLoader();
       }
 
       if (state is BaseStateError) {

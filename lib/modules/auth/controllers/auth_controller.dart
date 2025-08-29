@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movie_rent/core/errors/firebase_error_mapper.dart';
 import 'package:movie_rent/core/states/base_state.dart';
 import 'package:movie_rent/data/models/app_user_model.dart';
 import 'package:movie_rent/data/repositories/auth_repository.dart';
@@ -90,10 +92,10 @@ class AuthController extends GetxController {
       authState.value = BaseStateSuccess(null);
       Get.offAllNamed(AppRoutes.main);
 
-    } on FirebaseAuthException catch (e) {
-      authState.value = BaseStateError(e.message ?? 'Login failed');
     } catch (e) {
-      authState.value = BaseStateError('Unexpected error: $e');
+      debugPrint(e.toString());
+      final message = FirebaseErrorMapper.toMessage(e);
+      authState.value = BaseStateError(message);
     }
   }
 

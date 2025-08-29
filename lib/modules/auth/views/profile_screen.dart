@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 import 'package:movie_rent/modules/auth/widgets/logged_out_view.dart';
 import 'package:movie_rent/modules/profile/controllers/user_controller.dart';
@@ -21,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
       final user = authController.appUser.value;
 
       if (user == null) {
-        return const Center(child: CircularProgressIndicator());
+        return const AppLoader();
       }
 
       return ProfileDetailView(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_rent/core/enums/movie_category.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/modules/movie_list/controllers/movie_list_controller.dart';
 import 'package:movie_rent/modules/movie_list/widgets/movie_list_view.dart';
 import 'package:movie_rent/core/states/base_state.dart';
@@ -36,7 +37,7 @@ class MovieListScreen extends StatelessWidget {
         final state = controller.movieState.value;
 
         if (state is BaseStateLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const AppLoader();
         } else if (state is BaseStateError) {
           return Center(child: Text((state as BaseStateError).message));
         } else if (state is BaseStateSuccess<List<MovieModel>>) {

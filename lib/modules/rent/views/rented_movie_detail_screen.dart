@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:movie_rent/core/helpers/image_helper.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/data/models/movie_rent.dart';
 import 'package:movie_rent/modules/auth/controllers/auth_controller.dart';
 import 'package:movie_rent/modules/movie_detail/controllers/movie_detail_controller.dart';
@@ -42,7 +43,7 @@ class RentedMovieDetailScreen extends StatelessWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(
                   color: Colors.grey[300],
-                  child: const Center(child: CircularProgressIndicator()),
+                  child: const AppLoader(),
                 ),
                 errorWidget: (context, url, error) => Container(
                   color: Colors.grey[300],

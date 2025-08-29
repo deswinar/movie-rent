@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_rent/core/helpers/image_helper.dart';
+import 'package:movie_rent/core/widgets/app_loader.dart';
 import 'package:movie_rent/data/models/movie_model.dart';
 
 class BackdropImage extends StatelessWidget {
@@ -19,7 +20,7 @@ class BackdropImage extends StatelessWidget {
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
                 color: Colors.grey[300],
-                child: const Center(child: CircularProgressIndicator()),
+                child: const AppLoader(),
               ),
               errorWidget: (context, url, error) => Container(
                 color: Colors.grey[300],
