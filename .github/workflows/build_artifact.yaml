@@ -3,7 +3,7 @@ name: Build Artifact
 on:
   push:
     branches:
-      - feature/animation
+      - main
 
 jobs:
   build:
